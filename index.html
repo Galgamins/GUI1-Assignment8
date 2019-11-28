@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<!--
+        File: /usr/cs/undergrad/2020/yzhu/public_html/index.html
+        COMP 4610 Assignment: Creating an Interactive Dynamic Table
+        Yinghui Zhu, Umass Lowell Computer Science, yinghui_zhu@student.uml.edu
+        Copy (c) 2019 by Yinghui Zhu. All s reserved.
+        Updated October 8th 2019
+
+        This file is a multiplication table
+    -->
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>
+    Multiplication Table
+  </title>
+  <!-- stylesheets-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+  <h1 class="text-center">
+    Multiplication Table
+  </h1>
+
+  <!-- Form for inputs. Validate inputs are numbers using type="number". Non-number values will not be accepted. -->
+  <div class="row justify-content-md-center left">
+    <form class="cmxform" id="tableInput" name="tableInput">
+      <div class="form-group text-center">
+        <label for="multiplier1">Multiplier 1</label>
+        <input type="number" required class="form-control" name="multiplier1" id="multiplier1" placeholder="Enter lower number">
+      </div>
+      <div class="form-group text-center">
+        <label for="multiplier2">Multiplier 2</label>
+        <input type="number" required class="form-control" name="multiplier2" id="multiplier2" placeholder="Enter higher number">
+      </div>
+      <div class="form-group text-center">
+        <label for="multiplicand1">Multiplicand 1</label>
+        <input type="number" required class="form-control" name="multiplicand1" id="multiplicand1" placeholder="Enter lower number">
+      </div>
+      <div class="form-group text-center">
+        <label for="multiplicand2">Multiplicand 2</label>
+        <input type="number" required class="form-control" name="multiplicand2" id="multiplicand2" placeholder="Enter higher number">
+      </div>
+      <div class="text-center">
+        <button type="submit" name="submit" class="btn btn-secondary" id="submit">Generate Table</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="right">
+    <h2 class="text-center">
+      Result
+    </h2>
+
+    <table id="resultTable">
+    </table>
+
+  </div>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript for BootStrap-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <!-- jQuery Validation Plugin-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.js"></script>
+
+  <!-- Custom scripts -->
+  <script src="js/file.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      validate();
+    });
+  </script>
+</body>
+
+</html>

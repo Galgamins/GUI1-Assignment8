@@ -1,0 +1,70 @@
+/*
+        File: /usr/cs/undergrad/2020/yzhu/public_html/css/style.css
+        COMP 4610 Assignment: Creating an Interactive Dynamic Table
+        Yinghui Zhu, Umass Lowell Computer Science, yinghui_zhu@student.uml.edu
+        Copy (c) 2019 by Yinghui Zhu. All s reserved.
+        Updated October 8th 2019
+
+        This file is a multiplication table
+*/
+body {
+  font-family: Helvetica, sans-serif;
+}
+
+/*Used to help center many things*/
+.text-center {
+  text-align: center;
+}
+
+form {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+table {
+  margin: auto;
+  border: 1px solid black;
+}
+
+td {
+  text-align: center;
+  padding: 10px;
+}
+
+/*Styles the even numbered table cells. 2n+2 instead of 2n to avoid styling header.*/
+tr:nth-child(2n+2) td:nth-child(2n+2) {
+  background-color: orange;
+}
+
+/*Styles the odd numbered table cells. 2n+3 instead of 2n+1 to avoid styling header.*/
+tr:nth-child(2n+3) td:nth-child(2n+3) {
+  background-color: orange;
+}
+
+/*Styles horizontal header*/
+tbody tr:first-child td {
+  color: gold;
+  background-color: black;
+}
+
+/*Styles vertical header*/
+tr td:first-child {
+  color: gold;
+  background-color: black;
+}
+
+/*Styles error messages*/
+.error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+}
+
+.left {
+  float: left;
+  width: 50%;
+}
+
+.right {
+  float: right;
+  width: 50%;
+}
