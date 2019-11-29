@@ -49,7 +49,7 @@ function generateTable() {
   }
 };
 
-function validate() {
+$(function() {
   $("#tableInput").validate({
     // Rules for validating the form.
     rules: {
@@ -77,15 +77,15 @@ function validate() {
         integer: "The value must be an integer. Please enter an integer."
       },
       multiplier2: {
-        required: "This entry cannot be blank",
+        required: "This entry cannot be blank. Please enter an integer.",
         integer: "The value must be an integer. Please enter an integer."
       },
       multiplicand1: {
-        required: "This entry cannot be blank",
+        required: "This entry cannot be blank. Please enter an integer.",
         integer: "The value must be an integer. Please enter an integer."
       },
       multiplicand2: {
-        required: "This entrycannot be blank",
+        required: "This entry cannot be blank. Please enter an integer.",
         integer: "The value must be an integer. Please enter an integer."
       }
     },
@@ -102,4 +102,4 @@ function validate() {
       error.insertAfter(element);
     }
   });
-};
+});
