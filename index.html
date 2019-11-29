@@ -32,23 +32,23 @@
     <form class="cmxform" id="tableInput" name="tableInput">
       <div class="form-group text-center">
         <label for="multiplier1">Multiplier 1</label>
-        <input type="number" required class="form-control" name="multiplier1" id="multiplier1" placeholder="Enter lower number">
-        <div id="slider1"></div>
+        <input type="text" required class="form-control" name="multiplier1" id="multiplier1" placeholder="Enter lower number">
+        <div class="slider" id = "multiplier1Slider"></div>
       </div>
       <div class="form-group text-center">
         <label for="multiplier2">Multiplier 2</label>
-        <input type="number" required class="form-control" name="multiplier2" id="multiplier2" placeholder="Enter higher number">
-        <div id="slider2"></div>
+        <input type="text" required class="form-control" name="multiplier2" id="multiplier2" placeholder="Enter higher number">
+        <div class="slider" id = "multiplier2Slider"></div>
       </div>
       <div class="form-group text-center">
         <label for="multiplicand1">Multiplicand 1</label>
-        <input type="number" required class="form-control" name="multiplicand1" id="multiplicand1" placeholder="Enter lower number">
-        <div id="slider3"></div>
+        <input type="text" required class="form-control" name="multiplicand1" id="multiplicand1" placeholder="Enter lower number">
+        <div class="slider" id = "multiplicand1Slider"></div>
       </div>
       <div class="form-group text-center">
         <label for="multiplicand2">Multiplicand 2</label>
-        <input type="number" required class="form-control" name="multiplicand2" id="multiplicand2" placeholder="Enter higher number">
-        <div id="slider4"></div>
+        <input type="text" required class="form-control" name="multiplicand2" id="multiplicand2" placeholder="Enter higher number">
+        <div class="slider" id = "multiplicand2Slider"></div>
       </div>
       <div class="text-center">
         <button type="submit" name="submit" class="btn btn-secondary" id="submit">Generate Table</button>
@@ -57,9 +57,9 @@
   </div>
 
   <div class="right">
-    <h2 class="text-center">
+    <h4 class="text-center">
       Result
-    </h2>
+    </h4>
 
     <table id="resultTable">
     </table>
@@ -79,25 +79,6 @@
 
   <!-- Custom scripts -->
   <script src="js/file.js"></script>
-
-  <script>
-    $(document).ready(function() {
-      validate();
-    });
-
-    (function($) {
-      $("#slider1").slider();
-    })(jQuery);
-    (function($) {
-      $("#slider2").slider();
-    })(jQuery);
-    (function($) {
-      $("#slider3").slider();
-    })(jQuery);
-    (function($) {
-      $("#slider4").slider();
-    })(jQuery);
-  </script>
 </body>
 
 </html>

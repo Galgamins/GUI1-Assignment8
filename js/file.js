@@ -54,18 +54,26 @@ $(function() {
     // Rules for validating the form.
     rules: {
       multiplier1: {
+        min: -10,
+        max: 10,
         required: true,
         integer: true,
       },
       multiplier2: {
+        min: -10,
+        max: 10,
         required: true,
         integer: true,
       },
       multiplicand1: {
+        min: -10,
+        max: 10,
         required: true,
         integer: true,
       },
       multiplicand2: {
+        min: -10,
+        max: 10,
         required: true,
         integer: true,
       }
@@ -102,4 +110,69 @@ $(function() {
       error.insertAfter(element);
     }
   });
+});
+
+$(function() {
+  var sliderOpts1 = {
+    min: -10,
+    max: 10,
+    animate: true,
+    slide: function(event, ui) {
+      $("#multiplier1").val(ui.value);
+    }
+  };
+
+  var sliderOpts2 = {
+    min: -10,
+    max: 10,
+    animate: true,
+    slide: function(event, ui) {
+      $("#multiplier2").val(ui.value);
+    }
+  };
+
+  var sliderOpts3 = {
+    min: -10,
+    max: 10,
+    animate: true,
+    slide: function(event, ui) {
+      $("#multiplicand1").val(ui.value);
+    }
+  };
+
+  var sliderOpts4 = {
+    min: -10,
+    max: 10,
+    animate: true,
+    slide: function(event, ui) {
+      $("#multiplicand2").val(ui.value);
+    }
+  };
+
+
+  $("#multiplier1Slider").slider(sliderOpts1);
+  $("#multiplier2Slider").slider(sliderOpts2);
+  $("#multiplicand1Slider").slider(sliderOpts3);
+  $("#multiplicand2Slider").slider(sliderOpts4);
+
+
+  $('#multiplier1' ).blur( function() {
+    $("#multiplier1Slider").slider("value", parseInt($('#multiplier1').val() ) ) ;
+  });
+
+  $('#multiplier2' ).blur( function() {
+    $("#multiplier2Slider").slider("value", parseInt($('#multiplier2').val() ) ) ;
+  });
+
+  $('#multiplicand1' ).blur( function() {
+    $("#multiplicand1Slider").slider("value", parseInt($('#multiplicand1').val() ) ) ;
+  });
+
+  $('#multiplicand2' ).blur( function() {
+    $("#multiplicand2Slider").slider("value", parseInt($('#multiplicand2').val() ) ) ;
+  });
+
+
+
+
 });
