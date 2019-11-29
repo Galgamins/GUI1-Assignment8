@@ -119,6 +119,7 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplier1").val(ui.value);
+      generateTable();
     }
   };
 
@@ -128,6 +129,7 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplier2").val(ui.value);
+      generateTable();
     }
   };
 
@@ -137,6 +139,7 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplicand1").val(ui.value);
+      generateTable();
     }
   };
 
@@ -146,6 +149,7 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplicand2").val(ui.value);
+      generateTable();
     }
   };
 
