@@ -18,6 +18,7 @@
   </title>
   <!-- stylesheets-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
@@ -32,18 +33,22 @@
       <div class="form-group text-center">
         <label for="multiplier1">Multiplier 1</label>
         <input type="number" required class="form-control" name="multiplier1" id="multiplier1" placeholder="Enter lower number">
+        <div id="slider1"></div>
       </div>
       <div class="form-group text-center">
         <label for="multiplier2">Multiplier 2</label>
         <input type="number" required class="form-control" name="multiplier2" id="multiplier2" placeholder="Enter higher number">
+        <div id="slider2"></div>
       </div>
       <div class="form-group text-center">
         <label for="multiplicand1">Multiplicand 1</label>
         <input type="number" required class="form-control" name="multiplicand1" id="multiplicand1" placeholder="Enter lower number">
+        <div id="slider3"></div>
       </div>
       <div class="form-group text-center">
         <label for="multiplicand2">Multiplicand 2</label>
         <input type="number" required class="form-control" name="multiplicand2" id="multiplicand2" placeholder="Enter higher number">
+        <div id="slider4"></div>
       </div>
       <div class="text-center">
         <button type="submit" name="submit" class="btn btn-secondary" id="submit">Generate Table</button>
@@ -69,6 +74,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.js"></script>
 
+  <!-- jQuery UI Plugin-->
+  <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
+
   <!-- Custom scripts -->
   <script src="js/file.js"></script>
 
@@ -76,6 +84,19 @@
     $(document).ready(function() {
       validate();
     });
+
+    (function($) {
+      $("#slider1").slider();
+    })(jQuery);
+    (function($) {
+      $("#slider2").slider();
+    })(jQuery);
+    (function($) {
+      $("#slider3").slider();
+    })(jQuery);
+    (function($) {
+      $("#slider4").slider();
+    })(jQuery);
   </script>
 </body>
 
