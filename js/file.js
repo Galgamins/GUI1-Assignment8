@@ -1,6 +1,10 @@
 //Main function to generate table. Everything goes through this function.
 function generateTable() {
-  var table = document.getElementById("resultTable");
+
+  $("<table id=tabId" + tabCount + "></table>").appendTo("#myTabs");
+
+  var table = document.getElementById("tabId" + tabCount);
+  //var table = document.getElementById("fragment" + tabCount);
   table.innerHTML = ""; //Clears table contents in case there was previously cells in there
 
   var multiplier1 = parseInt(document.getElementById("multiplier1").value);
@@ -32,7 +36,6 @@ function generateTable() {
 
   //Fills in horizontal header
   for (i = multiplierMin; i <= multiplierMax; i++) {
-    console.log(i);
     var cell = rowHead.insertCell(-1);
     cell.innerHTML = i;
   }
@@ -153,12 +156,10 @@ $(function() {
     }
   };
 
-
   $("#multiplier1Slider").slider(sliderOpts1);
   $("#multiplier2Slider").slider(sliderOpts2);
   $("#multiplicand1Slider").slider(sliderOpts3);
   $("#multiplicand2Slider").slider(sliderOpts4);
-
 
   $('#multiplier1' ).blur( function() {
     $("#multiplier1Slider").slider("value", parseInt($('#multiplier1').val() ) ) ;
@@ -175,8 +176,33 @@ $(function() {
   $('#multiplicand2' ).blur( function() {
     $("#multiplicand2Slider").slider("value", parseInt($('#multiplicand2').val() ) ) ;
   });
+});
 
+var tabCount = 0;
 
+$(function() {
+
+  $("#myTabs").tabs();
+
+  $("#addTab").click(function(){
+    var multiplier1 = parseInt(document.getElementById("multiplier1").value);
+    var multiplier2 = parseInt(document.getElementById("multiplier2").value);
+    var multiplicand1 = parseInt(document.getElementById("multiplicand1").value);
+    var multiplicand2 = parseInt(document.getElementById("multiplicand2").value);
+    //$("<li><a href='#tabId" + tabCount + "'>" + multiplier1 + "-" + multiplier2 + "X" + multiplicand1 + "-" + multiplicand2 + "</a></li>").appendTo("#myTabs .ui-tabs-nav");
+    tabCount++;
+    $("#myTabs").tabs("add", "#fragment-" + tabCount, multiplier1 + "-" + multiplier2 + "X" + multiplicand1 + "-" + multiplicand2 , [tabCount]);
+    $("div#myTabs").tabs("refresh");
+  });
+
+  $("#deleteTab").click(function(){
+
+    var selectedTab = $('#myTabs').tabs('option', 'selected')
+    var hrefStr = "a[href='#tabId" + tabCount + "']"
+     //$(hrefStr).closest("li").remove()
+     tabCount--;
+     $('#tabs').tabs("remove", [selectedTab]);
+  });
 
 
 });
