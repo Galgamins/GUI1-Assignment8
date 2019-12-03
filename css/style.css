@@ -1,11 +1,11 @@
 /*
         File: /usr/cs/undergrad/2020/yzhu/public_html/css/style.css
-        COMP 4610 Assignment: Creating an Interactive Dynamic Table
+        COMP 4610 Assignment: Using the jQuery UI Slider and Tab Widgets
         Yinghui Zhu, Umass Lowell Computer Science, yinghui_zhu@student.uml.edu
         Copy (c) 2019 by Yinghui Zhu. All s reserved.
-        Updated October 8th 2019
+        Updated December 2nd 2019
 
-        This file is a multiplication table
+        This file is the stylesheet for page that generates multiplication tables
 */
 body {
   font-family: Helvetica, sans-serif;
@@ -55,8 +55,8 @@ tr td:first-child {
 
 /*Styles error messages*/
 .error {
-    color: #D8000C;
-    background-color: #FFD2D2;
+  color: #D8000C;
+  background-color: #FFD2D2;
 }
 
 .left {

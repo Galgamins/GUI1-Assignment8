@@ -1,3 +1,11 @@
+//        File: /usr/cs/undergrad/2020/yzhu/public_html/js/file.js
+//        COMP 4610 Assignment: Using the jQuery UI Slider and Tab Widgets
+//        Yinghui Zhu, Umass Lowell Computer Science, yinghui_zhu@student.uml.edu
+//        Copy (c) 2019 by Yinghui Zhu. All s reserved.
+//        Updated December 2nd 2019
+
+//        This file is the javascript for page that generates multiplication tables
+
 //These variables are used to track the low and high inputs of the multipliers and multiplicands,
 //regardless of which was entered first.
 var multiplierMin;
@@ -12,7 +20,7 @@ var tabTitle = $("#tab_title")
 var tabTemplate = "<li class=\"dynamicTab\"><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>"
 var tabs = $("#tabs").tabs();
 
-//This function gets the inputs to the form.
+//This function gets the inputs of the form.
 function getFormInputs() {
   var multiplier1 = parseInt(document.getElementById("multiplier1").value);
   var multiplier2 = parseInt(document.getElementById("multiplier2").value);
@@ -75,6 +83,7 @@ $(function() {
   generateTable(0);
   $("#tableInput").validate({
     // Form functions start here
+    //Limits set to -100 to 100 to prevent crashes from too large values
     rules: {
       multiplier1: {
         min: -100,
@@ -129,6 +138,7 @@ $(function() {
   });
 
   //Slider functions start here
+  //Limits set to -100 to 100 to prevent crashes from too large values
   var sliderOpts1 = {
     min: -100,
     max: 100,
@@ -136,7 +146,7 @@ $(function() {
     slide: function(event, ui) {
       $("#multiplier1").val(ui.value);
       if ($('#tableInput').valid()) {
-          generateTable(0);
+        generateTable(0);
       }
     }
   };
@@ -148,7 +158,7 @@ $(function() {
     slide: function(event, ui) {
       $("#multiplier2").val(ui.value);
       if ($('#tableInput').valid()) {
-          generateTable(0);
+        generateTable(0);
       }
     }
   };
@@ -160,7 +170,7 @@ $(function() {
     slide: function(event, ui) {
       $("#multiplicand1").val(ui.value);
       if ($('#tableInput').valid()) {
-          generateTable(0);
+        generateTable(0);
       }
     }
   };
@@ -172,21 +182,23 @@ $(function() {
     slide: function(event, ui) {
       $("#multiplicand2").val(ui.value);
       if ($('#tableInput').valid()) {
-          generateTable(0);
+        generateTable(0);
       }
     }
   };
 
+  //Initializes sliders with options
   $("#multiplier1Slider").slider(sliderOpts1);
   $("#multiplier2Slider").slider(sliderOpts2);
   $("#multiplicand1Slider").slider(sliderOpts3);
   $("#multiplicand2Slider").slider(sliderOpts4);
 
+  //Code for when values are entered directly into form
   $('#multiplier1').blur(function() {
     var multiplier1 = parseInt($('#multiplier1').val());
     $("#multiplier1Slider").slider("value", multiplier1);
     if ($('#tableInput').valid()) {
-        generateTable(0);
+      generateTable(0);
     }
   });
 
@@ -194,7 +206,7 @@ $(function() {
     var multiplier2 = parseInt($('#multiplier2').val());
     $("#multiplier2Slider").slider("value", multiplier2);
     if ($('#tableInput').valid()) {
-        generateTable(0);
+      generateTable(0);
     }
   });
 
@@ -202,7 +214,7 @@ $(function() {
     var multiplicand1 = parseInt($('#multiplicand1').val());
     $("#multiplicand1Slider").slider("value", multiplicand1);
     if ($('#tableInput').valid()) {
-        generateTable(0);
+      generateTable(0);
     }
   });
 
@@ -210,7 +222,7 @@ $(function() {
     var multiplicand2 = parseInt($('#multiplicand2').val());
     $("#multiplicand2Slider").slider("value", multiplicand2);
     if ($('#tableInput').valid()) {
-        generateTable(0);
+      generateTable(0);
     }
   });
 
@@ -240,6 +252,7 @@ $(function() {
 });
 
 //Adding via html manipulation because jQuery UI 1.9 removed built in add function
+//Source: https://jqueryui.com/tabs/#manipulation
 function addTab() {
   tabCounter++;
   var label = tabTitle.val() || "[" + multiplierMin + "," + multiplierMax + "] x [" + multiplicandMin + "," + multiplicandMax + "]",
