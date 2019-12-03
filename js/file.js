@@ -30,13 +30,13 @@ function getFormInputs(){
 }
 
 //Function to generate table.
-function generateTable() {
+function generateTable(tabNumber) {
 
   if($("#resultTable-" + tabCounter).length == 0){
     $("<table id=resultTable-" + tabCounter + "></table>").appendTo("#tabs-" + tabCounter);
   }
 
-  var table = document.getElementById("resultTable-0");
+  var table = document.getElementById("resultTable-" + tabNumber);
   table.innerHTML = ""; //Clears table contents in case there was previously cells in there
 
   getFormInputs();
@@ -127,7 +127,7 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplier1").val(ui.value);
-      generateTable();
+      generateTable(0);
     }
   };
 
@@ -137,7 +137,7 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplier2").val(ui.value);
-      generateTable();
+      generateTable(0);
     }
   };
 
@@ -147,7 +147,7 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplicand1").val(ui.value);
-      generateTable();
+      generateTable(0);
     }
   };
 
@@ -157,7 +157,7 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplicand2").val(ui.value);
-      generateTable();
+      generateTable(0);
     }
   };
 
@@ -167,23 +167,23 @@ $(function() {
   $("#multiplicand2Slider").slider(sliderOpts4);
 
   $('#multiplier1' ).blur( function() {
-    $("#multiplier1Slider").slider("value", parseInt($('#multiplier1').val() ) ) ;
-    generateTable()
+    $("#multiplier1Slider").slider("value", parseInt($('#multiplier1').val())) ;
+    generateTable(0);
   });
 
   $('#multiplier2' ).blur( function() {
-    $("#multiplier2Slider").slider("value", parseInt($('#multiplier2').val() ) ) ;
-    generateTable()
+    $("#multiplier2Slider").slider("value", parseInt($('#multiplier2').val())) ;
+    generateTable(0);
   });
 
   $('#multiplicand1' ).blur( function() {
-    $("#multiplicand1Slider").slider("value", parseInt($('#multiplicand1').val() ) ) ;
-    generateTable()
+    $("#multiplicand1Slider").slider("value", parseInt($('#multiplicand1').val())) ;
+    generateTable(0);
   });
 
   $('#multiplicand2' ).blur( function() {
-    $("#multiplicand2Slider").slider("value", parseInt($('#multiplicand2').val() ) ) ;
-    generateTable()
+    $("#multiplicand2Slider").slider("value", parseInt($('#multiplicand2').val())) ;
+    generateTable(0);
   });
 });
 
@@ -204,6 +204,7 @@ $(function() {
   $("#saveTable").click(function(){
     getFormInputs();
     addTab();
+    generateTable(tabCounter);
     $('#tabs').tabs('option', 'active', -1); //Make the newly added tab selected
   });
 
