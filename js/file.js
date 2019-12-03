@@ -9,7 +9,7 @@ var multiplicandMax;
 var tabCounter = 0;
 var tabCurrent = 0;
 var tabTitle = $("#tab_title")
-var tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>"
+var tabTemplate = "<li class=\"dynamicTab\"><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>"
 var tabs = $("#tabs").tabs();
 
 //This function gets the inputs to the form.
@@ -72,8 +72,9 @@ function generateTable(tabNumber) {
 };
 
 $(function() {
+  generateTable(0);
   $("#tableInput").validate({
-    // Rules for validating the form.
+    // Form functions start here
     rules: {
       multiplier1: {
         min: -100,
@@ -126,17 +127,17 @@ $(function() {
       error.insertAfter(element);
     }
   });
-});
 
-//Restrictions on slider range
-$(function() {
+  //Slider functions start here
   var sliderOpts1 = {
     min: -100,
     max: 100,
     animate: true,
     slide: function(event, ui) {
       $("#multiplier1").val(ui.value);
-      generateTable(0);
+      if ($('#tableInput').valid()) {
+          generateTable(0);
+      }
     }
   };
 
@@ -146,7 +147,9 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplier2").val(ui.value);
-      generateTable(0);
+      if ($('#tableInput').valid()) {
+          generateTable(0);
+      }
     }
   };
 
@@ -156,7 +159,9 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplicand1").val(ui.value);
-      generateTable(0);
+      if ($('#tableInput').valid()) {
+          generateTable(0);
+      }
     }
   };
 
@@ -166,7 +171,9 @@ $(function() {
     animate: true,
     slide: function(event, ui) {
       $("#multiplicand2").val(ui.value);
-      generateTable(0);
+      if ($('#tableInput').valid()) {
+          generateTable(0);
+      }
     }
   };
 
@@ -176,40 +183,45 @@ $(function() {
   $("#multiplicand2Slider").slider(sliderOpts4);
 
   $('#multiplier1').blur(function() {
-    $("#multiplier1Slider").slider("value", parseInt($('#multiplier1').val()));
-    generateTable(0);
-  });
-
-  $('#multiplier2').blur(function() {
-    $("#multiplier2Slider").slider("value", parseInt($('#multiplier2').val()));
-    generateTable(0);
-  });
-
-  $('#multiplicand1').blur(function() {
-    $("#multiplicand1Slider").slider("value", parseInt($('#multiplicand1').val()));
-    generateTable(0);
-  });
-
-  $('#multiplicand2').blur(function() {
-    $("#multiplicand2Slider").slider("value", parseInt($('#multiplicand2').val()));
-    generateTable(0);
-  });
-});
-
-
-
-$(function() {
-  $("#tabs-").tabs({
-    select: function(event, ui) {
-
+    var multiplier1 = parseInt($('#multiplier1').val());
+    $("#multiplier1Slider").slider("value", multiplier1);
+    if ($('#tableInput').valid()) {
+        generateTable(0);
     }
   });
 
+  $('#multiplier2').blur(function() {
+    var multiplier2 = parseInt($('#multiplier2').val());
+    $("#multiplier2Slider").slider("value", multiplier2);
+    if ($('#tableInput').valid()) {
+        generateTable(0);
+    }
+  });
+
+  $('#multiplicand1').blur(function() {
+    var multiplicand1 = parseInt($('#multiplicand1').val());
+    $("#multiplicand1Slider").slider("value", multiplicand1);
+    if ($('#tableInput').valid()) {
+        generateTable(0);
+    }
+  });
+
+  $('#multiplicand2').blur(function() {
+    var multiplicand2 = parseInt($('#multiplicand2').val());
+    $("#multiplicand2Slider").slider("value", multiplicand2);
+    if ($('#tableInput').valid()) {
+        generateTable(0);
+    }
+  });
+
+  //Tab functions start here
   $("#saveTable").click(function() {
-    getFormInputs();
-    addTab();
-    generateTable(tabCounter);
-    $('#tabs').tabs('option', 'active', -1); //Make the newly added tab selected
+    if ($('#tableInput').valid()) {
+      getFormInputs();
+      addTab();
+      generateTable(tabCounter);
+      $('#tabs').tabs('option', 'active', -1); //Make the newly added tab selected
+    }
   });
 
   //Deletes a tab when clicking on close button
@@ -220,15 +232,11 @@ $(function() {
   });
 
   $("#deleteAllTables").click(function() {
-
-    var selectedTab = $('#tabs').tabs('option', 'selected')
-    var hrefStr = "a[href='#tabs-" + tabCounter + "']"
-    //$(hrefStr).closest("li").remove()
-    tabCounter--;
-    $('#tabs').tabs("remove", [selectedTab]);
+    tabCounter == 0;
+    $("table.dynamicTable").remove();
+    $("li.dynamicTab").remove();
+    $("div.dynamicTabContent").remove();
   });
-
-
 });
 
 //Adding via html manipulation because jQuery UI 1.9 removed built in add function
@@ -237,9 +245,9 @@ function addTab() {
   var label = tabTitle.val() || "[" + multiplierMin + "," + multiplierMax + "] x [" + multiplicandMin + "," + multiplicandMax + "]",
     id = "tabs-" + tabCounter,
     li = $(tabTemplate.replace(/#\{href\}/g, "#" + id).replace(/#\{label\}/g, label)),
-    tabTableHtml = "<table id=\"resultTable-" + tabCounter + "\"></table>"
+    tabTableHtml = "<table class = \"dynamicTable\" id=\"resultTable-" + tabCounter + "\"></table>"
 
   tabs.find(".ui-tabs-nav").append(li);
-  tabs.append("<div id='" + id + "'>" + tabTableHtml + "</div>");
+  tabs.append("<div class=\"dynamicTabContent\" id='" + id + "'>" + tabTableHtml + "</div>");
   tabs.tabs("refresh");
 }
