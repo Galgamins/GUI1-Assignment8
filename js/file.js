@@ -5,8 +5,15 @@ var multiplierMax;
 var multiplicandMin;
 var multiplicandMax;
 
+//Variables for tab functionality. Necessarily because jQuery UI 1.9 removed built in add function
+var tabCounter = 0;
+var tabCurrent = 0;
+var tabTitle = $("#tab_title")
+var tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>"
+var tabs = $("#tabs").tabs();
+
 //This function gets the inputs to the form.
-function getFormInputs(){
+function getFormInputs() {
   var multiplier1 = parseInt(document.getElementById("multiplier1").value);
   var multiplier2 = parseInt(document.getElementById("multiplier2").value);
   var multiplicand1 = parseInt(document.getElementById("multiplicand1").value);
@@ -29,10 +36,11 @@ function getFormInputs(){
   }
 }
 
-//Function to generate table.
+//Function to generate table. Argument specifies which tab to generate for. Use 0 for home tab.
 function generateTable(tabNumber) {
 
-  if($("#resultTable-" + tabCounter).length == 0){
+  //Check to prevent adding new table element every time slider is moved
+  if ($("#resultTable-" + tabCounter).length == 0) {
     $("<table id=resultTable-" + tabCounter + "></table>").appendTo("#tabs-" + tabCounter);
   }
 
@@ -68,26 +76,26 @@ $(function() {
     // Rules for validating the form.
     rules: {
       multiplier1: {
-        min: -10,
-        max: 10,
+        min: -100,
+        max: 100,
         required: true,
         integer: true,
       },
       multiplier2: {
-        min: -10,
-        max: 10,
+        min: -100,
+        max: 100,
         required: true,
         integer: true,
       },
       multiplicand1: {
-        min: -10,
-        max: 10,
+        min: -100,
+        max: 100,
         required: true,
         integer: true,
       },
       multiplicand2: {
-        min: -10,
-        max: 10,
+        min: -100,
+        max: 100,
         required: true,
         integer: true,
       }
@@ -120,10 +128,11 @@ $(function() {
   });
 });
 
+//Restrictions on slider range
 $(function() {
   var sliderOpts1 = {
-    min: -10,
-    max: 10,
+    min: -100,
+    max: 100,
     animate: true,
     slide: function(event, ui) {
       $("#multiplier1").val(ui.value);
@@ -132,8 +141,8 @@ $(function() {
   };
 
   var sliderOpts2 = {
-    min: -10,
-    max: 10,
+    min: -100,
+    max: 100,
     animate: true,
     slide: function(event, ui) {
       $("#multiplier2").val(ui.value);
@@ -142,8 +151,8 @@ $(function() {
   };
 
   var sliderOpts3 = {
-    min: -10,
-    max: 10,
+    min: -100,
+    max: 100,
     animate: true,
     slide: function(event, ui) {
       $("#multiplicand1").val(ui.value);
@@ -152,8 +161,8 @@ $(function() {
   };
 
   var sliderOpts4 = {
-    min: -10,
-    max: 10,
+    min: -100,
+    max: 100,
     animate: true,
     slide: function(event, ui) {
       $("#multiplicand2").val(ui.value);
@@ -166,56 +175,60 @@ $(function() {
   $("#multiplicand1Slider").slider(sliderOpts3);
   $("#multiplicand2Slider").slider(sliderOpts4);
 
-  $('#multiplier1' ).blur( function() {
-    $("#multiplier1Slider").slider("value", parseInt($('#multiplier1').val())) ;
+  $('#multiplier1').blur(function() {
+    $("#multiplier1Slider").slider("value", parseInt($('#multiplier1').val()));
     generateTable(0);
   });
 
-  $('#multiplier2' ).blur( function() {
-    $("#multiplier2Slider").slider("value", parseInt($('#multiplier2').val())) ;
+  $('#multiplier2').blur(function() {
+    $("#multiplier2Slider").slider("value", parseInt($('#multiplier2').val()));
     generateTable(0);
   });
 
-  $('#multiplicand1' ).blur( function() {
-    $("#multiplicand1Slider").slider("value", parseInt($('#multiplicand1').val())) ;
+  $('#multiplicand1').blur(function() {
+    $("#multiplicand1Slider").slider("value", parseInt($('#multiplicand1').val()));
     generateTable(0);
   });
 
-  $('#multiplicand2' ).blur( function() {
-    $("#multiplicand2Slider").slider("value", parseInt($('#multiplicand2').val())) ;
+  $('#multiplicand2').blur(function() {
+    $("#multiplicand2Slider").slider("value", parseInt($('#multiplicand2').val()));
     generateTable(0);
   });
 });
 
-var tabCounter = 0;
-var tabCurrent = 0;
-var tabTitle = $( "#tab_title" )
-var tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>"
-var tabs = $("#tabs").tabs();
 
 
 $(function() {
   $("#tabs-").tabs({
-    select: function(event, ui){
+    select: function(event, ui) {
 
     }
   });
 
-  $("#saveTable").click(function(){
+  $("#saveTable").click(function() {
     getFormInputs();
     addTab();
     generateTable(tabCounter);
     $('#tabs').tabs('option', 'active', -1); //Make the newly added tab selected
   });
 
-  $("#deleteTable").click(function(){
+  //Deletes a tab when clicking on close button
+  tabs.on("click", "span.ui-icon-close", function() {
+    var panelId = $(this).closest("li").remove().attr("aria-controls");
+    $("#" + panelId).remove();
+    tabs.tabs("refresh");
+  });
+
+  $("#deleteAllTables").click(function() {
 
     var selectedTab = $('#tabs').tabs('option', 'selected')
     var hrefStr = "a[href='#tabs-" + tabCounter + "']"
-     //$(hrefStr).closest("li").remove()
-     tabCounter--;
-     $('#tabs').tabs("remove", [selectedTab]);
+    //$(hrefStr).closest("li").remove()
+    tabCounter--;
+    $('#tabs').tabs("remove", [selectedTab]);
   });
+
+
 });
 
 //Adding via html manipulation because jQuery UI 1.9 removed built in add function
@@ -223,10 +236,10 @@ function addTab() {
   tabCounter++;
   var label = tabTitle.val() || "[" + multiplierMin + "," + multiplierMax + "] x [" + multiplicandMin + "," + multiplicandMax + "]",
     id = "tabs-" + tabCounter,
-    li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
+    li = $(tabTemplate.replace(/#\{href\}/g, "#" + id).replace(/#\{label\}/g, label)),
     tabTableHtml = "<table id=\"resultTable-" + tabCounter + "\"></table>"
 
-  tabs.find( ".ui-tabs-nav" ).append( li );
-  tabs.append( "<div id='" + id + "'>" + tabTableHtml + "</div>" );
-  tabs.tabs( "refresh" );
+  tabs.find(".ui-tabs-nav").append(li);
+  tabs.append("<div id='" + id + "'>" + tabTableHtml + "</div>");
+  tabs.tabs("refresh");
 }
