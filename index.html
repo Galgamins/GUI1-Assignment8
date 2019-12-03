@@ -18,7 +18,7 @@
   </title>
   <!-- stylesheets-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
@@ -26,55 +26,51 @@
   <h1 class="text-center">
     Multiplication Table
   </h1>
-
-  <!-- Form for inputs. Validate inputs are numbers using type="number". Non-number values will not be accepted. -->
-  <div class="row justify-content-md-center left">
-    <form class="cmxform" id="tableInput" name="tableInput">
-      <div class="form-group text-center">
-        <label for="multiplier1">Multiplier 1</label>
-        <input type="text" required class="form-control" name="multiplier1" id="multiplier1" placeholder="Enter lower number" value="0">
-        <div class="slider" id="multiplier1Slider"></div>
-      </div>
-      <div class="form-group text-center">
-        <label for="multiplier2">Multiplier 2</label>
-        <input type="text" required class="form-control" name="multiplier2" id="multiplier2" placeholder="Enter higher number" value="0">
-        <div class="slider" id="multiplier2Slider"></div>
-      </div>
-      <div class="form-group text-center">
-        <label for="multiplicand1">Multiplicand 1</label>
-        <input type="text" required class="form-control" name="multiplicand1" id="multiplicand1" placeholder="Enter lower number" value="0">
-        <div class="slider" id="multiplicand1Slider"></div>
-      </div>
-      <div class="form-group text-center">
-        <label for="multiplicand2">Multiplicand 2</label>
-        <input type="text" required class="form-control" name="multiplicand2" id="multiplicand2" placeholder="Enter higher number" value="0">
-        <div class="slider" id="multiplicand2Slider"></div>
-      </div>
-      <div class="text-center">
-        <button type="submit" name="submit" class="btn btn-secondary" id="submit">Generate Table</button>
-      </div>
-    </form>
-
-    <div class="text-center">
-      <button type="button" class="btn btn-secondary" id="addTab">Add Tab</button>
-    </div>
-    <div class="text-center">
-      <button type="button" class="btn btn-secondary" id="deleteTab">Delete Tab</button>
-    </div>
-    <div class="text-center">
-      <button type="button" class="btn btn-secondary" id="deleteAllTabs">Delete All Tabs</button>
-    </div>
-  </div>
-
-  <div class="right">
+  <div>
     <h4 class="text-center">
       Result
     </h4>
-    <div id="myTabs">
+    <div id="tabs">
       <ul class="ui-tabs-nav">
+        <li id="liTabs-0"><a href="#tabs-0">Home</a></li>
       </ul>
-      <table id="resultTable">
-      </table>
+      <div id="tabs-0">
+        <!-- Form for inputs. Validate inputs are numbers using type="number". Non-number values will not be accepted. -->
+        <div class="row justify-content-md-center">
+          <form class="cmxform" id="tableInput" name="tableInput">
+            <div class="form-group text-center">
+              <label for="multiplier1">Multiplier 1</label>
+              <input type="text" required class="form-control" name="multiplier1" id="multiplier1" placeholder="Enter lower number" value="0">
+              <div class="slider" id="multiplier1Slider"></div>
+            </div>
+            <div class="form-group text-center">
+              <label for="multiplier2">Multiplier 2</label>
+              <input type="text" required class="form-control" name="multiplier2" id="multiplier2" placeholder="Enter higher number" value="0">
+              <div class="slider" id="multiplier2Slider"></div>
+            </div>
+            <div class="form-group text-center">
+              <label for="multiplicand1">Multiplicand 1</label>
+              <input type="text" required class="form-control" name="multiplicand1" id="multiplicand1" placeholder="Enter lower number" value="0">
+              <div class="slider" id="multiplicand1Slider"></div>
+            </div>
+            <div class="form-group text-center">
+              <label for="multiplicand2">Multiplicand 2</label>
+              <input type="text" required class="form-control" name="multiplicand2" id="multiplicand2" placeholder="Enter higher number" value="0">
+              <div class="slider" id="multiplicand2Slider"></div>
+            </div>
+          </form>
+          <div class="text-center">
+            <button type="button" class="btn btn-secondary" id="saveTable">Save Table</button>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-secondary" id="deleteTable">Delete Current Table</button>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-secondary" id="deleteAllTables">Delete All Tables</button>
+          </div>
+        </div>
+        <table id="resultTable-0"></table>
+      </div>
     </div>
   </div>
   <!-- jQuery library -->
@@ -87,7 +83,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.js"></script>
 
   <!-- jQuery UI Plugin-->
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
 
   <!-- Custom scripts -->
   <script src="js/file.js"></script>

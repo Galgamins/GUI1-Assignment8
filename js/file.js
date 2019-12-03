@@ -1,34 +1,45 @@
-//Main function to generate table. Everything goes through this function.
-function generateTable() {
+//These variables are used to track the low and high inputs of the multipliers and multiplicands,
+//regardless of which was entered first.
+var multiplierMin;
+var multiplierMax;
+var multiplicandMin;
+var multiplicandMax;
 
-  $("<table id=tabId" + tabCount + "></table>").appendTo("#myTabs");
-
-  var table = document.getElementById("tabId" + tabCount);
-  //var table = document.getElementById("fragment" + tabCount);
-  table.innerHTML = ""; //Clears table contents in case there was previously cells in there
-
+//This function gets the inputs to the form.
+function getFormInputs(){
   var multiplier1 = parseInt(document.getElementById("multiplier1").value);
   var multiplier2 = parseInt(document.getElementById("multiplier2").value);
   var multiplicand1 = parseInt(document.getElementById("multiplicand1").value);
   var multiplicand2 = parseInt(document.getElementById("multiplicand2").value);
 
-  //convert to Number to handle floating point inputs
   if (multiplier1 <= multiplier2) {
-    multiplierMin = Number(multiplier1);
-    multiplierMax = Number(multiplier2);
+    multiplierMin = multiplier1;
+    multiplierMax = multiplier2;
   } else {
-    multiplierMin = Number(multiplier2);
-    multiplierMax = Number(multiplier1);
+    multiplierMin = multiplier2;
+    multiplierMax = multiplier1;
   }
 
   if (multiplicand1 <= multiplicand2) {
-    multiplicandMin = Number(multiplicand1);
-    multiplicandMax = Number(multiplicand2);
+    multiplicandMin = multiplicand1;
+    multiplicandMax = multiplicand2;
   } else {
-    multiplicandMin = Number(multiplicand2);
-    multiplicandMax = Number(multiplicand1);
+    multiplicandMin = multiplicand2;
+    multiplicandMax = multiplicand1;
+  }
+}
+
+//Function to generate table.
+function generateTable() {
+
+  if($("#resultTable-" + tabCounter).length == 0){
+    $("<table id=resultTable-" + tabCounter + "></table>").appendTo("#tabs-" + tabCounter);
   }
 
+  var table = document.getElementById("resultTable-0");
+  table.innerHTML = ""; //Clears table contents in case there was previously cells in there
+
+  getFormInputs();
 
   var rowHead = table.insertRow(0);
   var cell = rowHead.insertCell(-1);
@@ -101,12 +112,6 @@ $(function() {
       }
     },
 
-    // Handler for submit button click
-    submitHandler: function() {
-      generateTable();
-      return false;
-    },
-
     //Changes location of error message
     errorElement: "div",
     errorPlacement: function(error, element) {
@@ -163,46 +168,64 @@ $(function() {
 
   $('#multiplier1' ).blur( function() {
     $("#multiplier1Slider").slider("value", parseInt($('#multiplier1').val() ) ) ;
+    generateTable()
   });
 
   $('#multiplier2' ).blur( function() {
     $("#multiplier2Slider").slider("value", parseInt($('#multiplier2').val() ) ) ;
+    generateTable()
   });
 
   $('#multiplicand1' ).blur( function() {
     $("#multiplicand1Slider").slider("value", parseInt($('#multiplicand1').val() ) ) ;
+    generateTable()
   });
 
   $('#multiplicand2' ).blur( function() {
     $("#multiplicand2Slider").slider("value", parseInt($('#multiplicand2').val() ) ) ;
+    generateTable()
   });
 });
 
-var tabCount = 0;
+var tabCounter = 0;
+var tabCurrent = 0;
+var tabTitle = $( "#tab_title" )
+var tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>"
+var tabs = $("#tabs").tabs();
+
 
 $(function() {
+  $("#tabs-").tabs({
+    select: function(event, ui){
 
-  $("#myTabs").tabs();
-
-  $("#addTab").click(function(){
-    var multiplier1 = parseInt(document.getElementById("multiplier1").value);
-    var multiplier2 = parseInt(document.getElementById("multiplier2").value);
-    var multiplicand1 = parseInt(document.getElementById("multiplicand1").value);
-    var multiplicand2 = parseInt(document.getElementById("multiplicand2").value);
-    //$("<li><a href='#tabId" + tabCount + "'>" + multiplier1 + "-" + multiplier2 + "X" + multiplicand1 + "-" + multiplicand2 + "</a></li>").appendTo("#myTabs .ui-tabs-nav");
-    tabCount++;
-    $("#myTabs").tabs("add", "#fragment-" + tabCount, multiplier1 + "-" + multiplier2 + "X" + multiplicand1 + "-" + multiplicand2 , [tabCount]);
-    $("div#myTabs").tabs("refresh");
+    }
   });
 
-  $("#deleteTab").click(function(){
+  $("#saveTable").click(function(){
+    getFormInputs();
+    addTab();
+    $('#tabs').tabs('option', 'active', -1); //Make the newly added tab selected
+  });
 
-    var selectedTab = $('#myTabs').tabs('option', 'selected')
-    var hrefStr = "a[href='#tabId" + tabCount + "']"
+  $("#deleteTable").click(function(){
+
+    var selectedTab = $('#tabs').tabs('option', 'selected')
+    var hrefStr = "a[href='#tabs-" + tabCounter + "']"
      //$(hrefStr).closest("li").remove()
-     tabCount--;
+     tabCounter--;
      $('#tabs').tabs("remove", [selectedTab]);
   });
-
-
 });
+
+//Adding via html manipulation because jQuery UI 1.9 removed built in add function
+function addTab() {
+  tabCounter++;
+  var label = tabTitle.val() || "[" + multiplierMin + "," + multiplierMax + "] x [" + multiplicandMin + "," + multiplicandMax + "]",
+    id = "tabs-" + tabCounter,
+    li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
+    tabTableHtml = "<table id=\"resultTable-" + tabCounter + "\"></table>"
+
+  tabs.find( ".ui-tabs-nav" ).append( li );
+  tabs.append( "<div id='" + id + "'>" + tabTableHtml + "</div>" );
+  tabs.tabs( "refresh" );
+}
